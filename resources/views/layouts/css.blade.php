@@ -10,7 +10,7 @@
 <script src="{{ asset('assets/static/js/pages/tinymce.js') }}"></script>
 <script>
     tinymce.init({
-		selector: '#default',
+		selector: '.text-area',
 		menubar: false,
 		toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | link image',
 		setup: function (editor) {
@@ -29,5 +29,9 @@
     body.modal-open {
         overflow: hidden;
         padding-right: 17px;
+    }
+
+    .th-no {
+        width: 40px;
     }
 </style>

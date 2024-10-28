@@ -13,7 +13,7 @@ class TodoController extends Controller
     public function index()
     {
         //
-        $todos = Todo::latest()->get();
+        $todos = Todo::orderBy('id', 'ASC')->get();
         $titleTable = 'Todo List';
         return view('index', compact('todos', 'titleTable'));
     }
@@ -80,7 +80,6 @@ class TodoController extends Controller
         ]);
 
         try {
-            //code...
             $todo = Todo::findOrFail($id);
 
             $cleanDescription = str_replace('&nbsp;', ' ', $request->description);
@@ -90,10 +89,16 @@ class TodoController extends Controller
                 'description' => $cleanDescription
             ]);
 
-            return redirect()->back()->with('success', 'Todo updated successfully');
+            return response()->json([
+                'success' => true,
+                'message' => 'Todo updated successfully',
+                'data' => $todo
+            ]);
         } catch (\Throwable $th) {
-            //throw $th;
-            return redirect()->back()->with('error', $th->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => $th->getMessage(),
+            ], 500);
         }
     }
 
